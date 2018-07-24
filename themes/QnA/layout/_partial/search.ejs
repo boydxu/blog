@@ -1,10 +1,10 @@
 <div class="section" id="Search">
 	<div class="section_content">
-		<h3>
+		<!-- <h3>
 		<%= __(theme.search_title) %>
 		<br>
 		<%= __(theme.search_subtitle) %>
-		</h3>
+		</h3> -->
 		<div id="search-content" class="search-content-modal unexpanded">
 			<div id="search-view">
 				<div class="search-info box">
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="modal" id="search-result" style="display:none">
-				<h2 id="search-result-title">Found 0 match(es):</h2>
+				<h2 id="search-result-title">找不到对象</h2>
 				<ul id="search-result-list">
 				</ul>
 				<span>
@@ -42,29 +42,32 @@ temp += "::qa::lurn::qa::"+post.title+"::qa::lurn::qa::"+post.permalink+"::qa::l
 %>
 <%- js('js/lunr.min') %>
 <script>
-var content = lunr(function () {
-this.field('title');
-this.field('content');
-this.ref('id');
-})
+	var content = lunr(function () {
+		this.field('title');
+		this.field('content');
+		this.ref('id');
+	})
 	var postsAllText = (function () {/*<%= temp %>*/}).toString();
 	var arr = postsAllText.split("::qa::lurn::qa::");
+	
 	for(var i = 1; i+2 <= arr.length - 3; i+=3) {
-	content.add({
-	id: Math.floor(i/3),
-	title: arr[i],
-	content: arr[i+2]
-	});
+		content.add({
+			id: Math.floor(i/3),
+			title: arr[i],
+			content: arr[i+2]
+		});
 	}
 	function searchInSite() {
 		var keyword = document.getElementById("search-input").value;
+		
 		var result = content.search(keyword);
 		if (result.length == 0) {
-			document.getElementById("search-result-title").innerHTML = "Found 0 match.";
+			document.getElementById("search-result-title").innerHTML = "找不到对象";
 		} else {
-			document.getElementById("search-result-title").innerHTML = "Found "+result.length+" match(es):";
+			document.getElementById("search-result-title").innerHTML = "找到 "+result.length+"个对象:";
 		}
-		document.getElementById("search_result_list").innerHTML = "";
+		// document.getElementById("search_result_list").innerHTML = "";
+		document.getElementById("search-result-list").innerHTML = ''
 		for(var i = 0; i < result.length; i++) {
 			document.getElementById("search-result-list").innerHTML += '<li><a href="'+arr[result[i].ref*3+2]+'">'+arr[result[i].ref*3+1]+'</a></li>';
 		}
@@ -72,15 +75,15 @@ this.ref('id');
 	}
 	function searchInputOnKeyUp() {
 		event.preventDefault();
-	if (event.keyCode == 13) {
-	searchInSite();
-	}
+		if (event.keyCode == 13) {
+			searchInSite();
+		}
 	}
 </script>
 <% } %>
 <script>
-function dismissSearchResultModal() {
-	document.getElementById("search-result").style.display = "none";
-}
+	function dismissSearchResultModal() {
+		document.getElementById("search-result").style.display = "none";
+	}
 </script>
 </div>
