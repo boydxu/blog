@@ -12,8 +12,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /blog/public/
+url: https://boydxu.github.io
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -72,7 +72,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: QnA
+theme: hexo-theme-cactus
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
