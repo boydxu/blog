@@ -91,8 +91,8 @@ favicon:
 # Alternatively, add your own custom color scheme to source/css/_colors.
 colorscheme: dark
 
-# Maximal width of the page in rem units.
-page_width: 48
+# Maximal width of the page in rem units. 48
+page_width: 75
 
 
 ##############################################################################

@@ -3,11 +3,10 @@ title: redux-源码解析(1)-createStore
 date: 2018-07-25 22:31:41
 tags:
 ---
-[TOC]
 
 ## createStore
 
-顾名思义,创建一个store,首先看看createStore函数的函数签名
+顾名思义,用函数可以创建一个`store`对象,`store`负责保存和管理`state`,利用闭包特性,外部无法直接修改`state`,只能通过`store.getState()`来读取`state`,我们首先看看`createStore`函数的函数签名
 
 ```js
 createStore(reducer, [preloadedState], [enhancer])
@@ -36,7 +35,7 @@ createStore(reducer, preloadedState, enhancer) {
     preloadedState = undefined
   }
     
-  // 校验enhancer,对store进行增强,这篇文章暂时不做分析
+  // 校验enhancer,对store进行增强,本篇文章暂时不做分析
   if (typeof enhancer !== 'undefined') {
     if (typeof enhancer !== 'function') {
       throw new Error('Expected the enhancer to be a function.')
@@ -63,11 +62,13 @@ createStore(reducer, preloadedState, enhancer) {
     }
   }
    
-  // 读取store的state.注意!!!在reducer执行过程中无法调用该函数
+  // 读取store的state.
   function getState() {
+    // 注意!!!在reducer执行过程中无法使用该函数去读取state
     if (isDispatching) {
       throw new Error(
-        '在reducer执行中不能通过getState读取state,从reducer中的state参数中读取,而不是通过getState'
+        '在reducer执行中不能通过getState读取state,'+
+        '从reducer中的state参数中读取,而不是通过getState'
       )
     }
     return currentState
@@ -109,7 +110,7 @@ createStore(reducer, preloadedState, enhancer) {
 
 ## reducer
 
-`reducer`是一个纯函数,当`store`发送一个`action`时会在store内部被执行,它的函数签名是
+`reducer`是一个纯函数,它是唯一能修改`store`状态的途径,当`store`发送一个`action`时`reducer`会在`store`内部被执行,它的函数签名是
 
 ```js
 // state: 当前store的state
