@@ -1,7 +1,7 @@
 ---
 title: redux-源码解析(1)-createStore
 date: 2018-07-25 22:31:41
-tags:
+tags: redux
 ---
 
 ## createStore

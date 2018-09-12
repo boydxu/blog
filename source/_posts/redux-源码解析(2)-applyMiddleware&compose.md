@@ -1,7 +1,7 @@
 ---
-title: redux-源码解析(2)-applyMiddleware
+title: redux-源码解析(2)-applyMiddleware&compose
 date: 2018-08-09 21:29:49
-tags:
+tags: redux
 ---
 
 讲到redux中间件就涉及好多知识了, 如函数的柯里化、`store`的强化器`enhancer`、`compose`归并方法,这里不讲函数的柯里化.
@@ -11,7 +11,7 @@ tags:
 > `enhancer`是一个高阶函数.顾名思义,它用来增加或者修改store的功能, 在`createStore`中只有短短的几行代码涉及到它.
 
 
-先来看看它的函数签名,它接收`createStore`函数,返回一个接收`reducer`和`preloadedState`的函数
+先来看看它的函数签名,它接收`createStore`函数,返回一个参数为`reducer`和`preloadedState`的函数
 
 ```js
 function enhancer(createStore) {
